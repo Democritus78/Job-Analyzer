@@ -1,0 +1,71 @@
+# Python compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+ENV/
+env/
+.venv/
+.Python
+
+# Django migrations cache (optional, if auto-generated)
+**/migrations/__pycache__/
+
+# Database files (SQLite, dev use)
+*.sqlite3
+
+# Logs and local files
+*.log
+*.pot
+*.mo
+*.swp
+*.swo
+
+# Media / static file storage (optional, if not using CDN/Cloud)
+media/
+staticfiles/
+static_root/
+media_root/
+
+# IDE/editor folders
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS junk files
+.DS_Store
+Thumbs.db
+
+# Coverage and testing
+htmlcov/
+.coverage
+.tox/
+.nox/
+.pytest_cache/
+.cache/
+
+# pip environment stuff
+pip-wheel-metadata/
+*.egg-info/
+.eggs/
+
+# Build files
+build/
+dist/
+
+# Deployment files (optional)
+*.bak
+*.tmp
+
+# Docker/CI files (optional, adjust if needed)
+docker-compose.override.yml
+
+# Secrets (you should never put these in git)
+.env
+.env.*
+
+# Heroku files (optional)
+*.orig
