@@ -8,5 +8,11 @@
 <body>
     <h1>Hello, World!</h1>
     <p>Welcome to your custom Django frontend.</p>
+    <form method="post">
+        {% csrf_token %}
+        <label for="name">Enter your name:</label>
+        <input type="text" id="name" name="name" required>
+        <button type="submit">Submit</button>
+    </form>
 </body>
 </html>
