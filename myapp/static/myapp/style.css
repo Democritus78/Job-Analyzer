@@ -1,8 +1,53 @@
-body {
-    background-color: #f0f0f0;
-    font-family: Arial, sans-serif;
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
 }
 
-h1 {
-    color: darkblue;
+.custom-table {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black; /* outer border */
+    padding-left: 1px;
+    border-collapse: collapse;
+    font-family: sans-serif;
 }
+
+.row {
+    display: flex;
+    border-top: 1px solid black;
+}
+
+.row_top {
+    display: flex;
+}
+
+.row_top > div { /* The change only applies to the direct children of  */
+    flex: 1;
+    text-align: center;
+    padding: 10px;
+    border-left: 1px solid black;
+    box-sizing: border-box;
+    border-bottom: 1px solid black;
+}
+
+.row_description {
+    padding: 10px;
+}
+
+.row-top:first-child {
+/*            border-left: none;*/
+    border-left: none;
+
+}
+
+.cell {
+    border-left: 1px solid black;
+    padding: 10px 14px;
+    min-width: 100px;
+    background: #fff;
+}
+/*        
+.cell:first-child {
+    border-left: none;
+}
+*/
