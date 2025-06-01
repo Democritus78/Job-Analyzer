@@ -1,11 +1,67 @@
 {% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Hello Django</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'myapp/style.css' %}">
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+
+        .custom-table {
+            display: flex;
+            flex-direction: column;
+            border: 1px solid black; /* outer border */
+            padding-left: 1px;
+            border-collapse: collapse;
+            font-family: sans-serif;
+        }
+
+        .row {
+            display: flex;
+            border-top: 1px solid black;
+        }
+
+        .row_top {
+            display: flex;
+        }
+
+        .row_top > div { /* The change only applies to the direct children of  */
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            border-left: 1px solid black;
+            box-sizing: border-box;
+            border-bottom: 1px solid black;
+        }
+
+        .row_description {
+            padding: 10px;
+        }
+
+        .row-top:first-child {
+/*            border-left: none;*/
+            border-left: none;
+
+        }
+
+        .cell {
+            border-left: 1px solid black;
+            padding: 10px 14px;
+            min-width: 100px;
+            background: #fff;
+        }
+/*        
+        .cell:first-child {
+            border-left: none;
+        }
+*/
+    </style>
+    <title>Job Search</title>
+    <!--<link rel="stylesheet" type="text/css" href="{% static 'myapp/style.css' %}">-->
 </head>
 <body>
+    <!--
     <h1>Hello, World!</h1>
     <p>Welcome to your custom Django frontend.</p>
     <form method="post">
@@ -13,6 +69,214 @@
         <label for="name">Enter your name:</label>
         <input type="text" id="name" name="name" required>
         <button type="submit">Submit</button>
+    </form>
+    -->
+    <div>
+        <h2>My Profile</h2>
+        <ul id="Skills">
+            Programming Languages
+            <ul id="Programming Language">
+                <li>C</li>
+                <li>C++</li>
+                <li>Java</li>
+                <li>Python</li>
+                <li>SQL</li>
+                <li>HTML</li>
+                <li>JavaScript</li>
+            </ul>
+            Software
+            <ul id="Software">
+                <li>Django</li>
+                <li>SQLite</li>
+                <li>Git</li>
+                <li>AWS (Cloud)</li>
+                <li>Bazel</li>
+            </ul>
+        </ul>
+    </div>
+    <h2>Job Offer(s)</h2>
+    <!--
+    <table id="Job Offer table" style="width:100%">
+        <tr id="">
+            <th>Company Name</th>
+            <th>Job ID</th>
+            <th>Position</th>
+            <th>About the Job</th>
+            <th>Location</th>
+            <th>Salary</th>
+            <th>Responsibilities</th>
+            <th>Requirements</th>
+            <th>Language(s)</th>
+            <th>Technology</th>
+            <th>Benefits</th>
+            <th>Status</th>
+        </tr>
+        <tr>
+            <td>Village Labs</td>
+            <td></td>
+            <td>Software Engineer</td>
+            <td style="text-align: left; vertical-align: top;">
+                <ul>
+                    <li>We've built a product customers love, and we can't fully keep up with customer demand. We need a talented, ambitious, hard-working software engineer with 2+ years of experience who can help us build this rocket ship while we're flying it.</li>
+                    <li>You are that person. You are bought in to our mission and our product, and are capable of learning and growing with our business and our product.</li>
+                    <li>You will be one of the first employees at a mission-driven and fast-growing startup. You are ambitious and hard-working, but you (like us!) also believe in putting people first and having a huge amount of fun while you do your job 😁 .</li>
+                    <li>You are a hungry software developer who is capable of thought leadership and high-quality code output. You love to take ambiguous business problems and build technology to solve them across our tech stack. You are also autonomous and happy to take on big projects.</li>
+                    <li>You’re driven by a desire to solve problems day-in and day-out, at scale. You can quickly understand how something works, even when you haven’t seen it before.</li>
+                    <li>But you’re more than just your code! You love building a culture where people love to work (❤️). As one of the first employees, you’ll be integral to the long-term culture of Village and future employees will rely on you as a role model. You’ll be empathetic, hard-working, passionate, good at giving constructive feedback and, of course, having lots of fun.</li>
+                </ul>
+            </td>
+            <td>Atlanta, GA</td>
+            <td></td>
+            <td style="text-align: left; vertical-align: top;">
+                <ul>
+                    <li id="responsibility_1"> Take on all the different varied projects that only an early-stage startup can throw at you</li>
+                    <li id="responsibility_2"> Work closely with our Product team to continuously improve our product and develop new solutions to user needs</li>
+                    <li id="responsibility_3"> Learn and build across the web and data stack as the team needs you, taking ownership over core features when needed</li>
+                    <li id="responsibility_4"> Maintain thorough test coverage on your code–we’re all owners here</li>
+                    <li id="responsibility_5"> Guide the early Village technical architecture decisions that will resonate throughout the global economy for years to come 🤯 </li>
+                    <li id="responsibility_6"> Be a thought leader, working directly with the founders to set and ship the vision</li>
+                    <li id="responsibility_7"> Establish the Village engineering culture–live the mission and set a standard </li>
+                    <li id="responsibility_8"> Have an inordinate amount of fun</li>
+                </ul>
+            </td>
+            <td style="text-align: left; vertical-align: top;">
+                <ul>
+                    <li id="requirement_1">Bachelors and/or master’s degree, computer science preferred</li>
+                    <li id="requirement_2">2+ years professional experience in one or more programming languages (e.g., Python, C, C++, Java, JavaScript)</li>
+                    <li id="requirement_3">Strong communication and collaboration skills </li>
+                    <li id="requirement_4">Excitement, ambition, and fun</li>
+                    <li id="requirement_5">Experience in React, Nextjs, and TypeScript is nice to have</li>
+                </ul>
+            </td>
+            <td style="text-align: left; vertical-align: top;">
+                <ul>
+                    <li id="language_1">Python</li>
+                    <li id="language_2">C</li>
+                    <li id="language_3">C++</li>
+                    <li id="language_4">Java</li>
+                    <li id="language_5">JavaScript</li>
+                </ul>
+            </td>
+            <td style="text-align: left; vertical-align: top;">
+                <ul>
+                    <li id="technology_1">React</li>
+                    <li id="technology_2">Nextjs</li>
+                    <li id="technology_3">Typescript</li>
+                </ul>
+            </td>
+            <td style="text-align: left; vertical-align: top;">
+                <ul>
+                    <li id="benefit_1">A team of talented high achievers that values and invests in its people</li>
+                    <li id="benefit_2">Unlimited paid time off</li>
+                    <li id="benefit_3">Medical, dental, and vision</li>
+                    <li id="benefit_4">Early and generous employee stock option plan</li>
+                    <li id="benefit_5">$100 monthly health and wellness benefit</li>
+                    <li id="benefit_6">401(k) plan</li>
+                    <li id="benefit_7">Paid family leave</li>
+                    <li id="benefit_8">Apple products</li>
+                </ul>
+            </td>
+            <td></td>
+        </tr>
+    </table>
+    -->
+    <!--
+    <div class="custom-table">
+        <div class="row">
+          <div class="cell">A1</div>
+          <div class="cell">A2</div>
+          <div class="cell">A3</div>
+        </div>
+        <div class="row">
+          <div class="cell">B1</div>
+          <div class="cell">B2</div>
+        </div>
+        <div class="row">
+          <div class="cell">C1</div>
+          <div class="cell">C2</div>
+          <div class="cell">C3</div>
+          <div class="cell">C4</div>
+        </div>
+    </div>
+    -->
+    <div class="custom-table">
+        <div class="row_job">
+            <div class="row_top">
+                <div class="cell_company_logo"></div>
+                <div class="cell_company_name">Village Labs</div>
+                <div class="cell_job_id">N/A</div>
+                <div class="cell_job_position">Software Engineer</div>
+                <div class="cell_job_location">Atlanta, GA</div>
+                <div class="cell_job_salary">N/A</div>
+                <div class="cell_job_status">Application Pending</div>
+            </div>
+            <div class="row_description">
+                <div class="cell_about_the_job">
+                    About the Job
+                    <ul>
+                        <li>We've built a product customers love, and we can't fully keep up with customer demand. We need a talented, ambitious, hard-working software engineer with 2+ years of experience who can help us build this rocket ship while we're flying it.</li>
+                        <li>You are that person. You are bought in to our mission and our product, and are capable of learning and growing with our business and our product.</li>
+                        <li>You will be one of the first employees at a mission-driven and fast-growing startup. You are ambitious and hard-working, but you (like us!) also believe in putting people first and having a huge amount of fun while you do your job 😁 .</li>
+                        <li>You are a hungry software developer who is capable of thought leadership and high-quality code output. You love to take ambiguous business problems and build technology to solve them across our tech stack. You are also autonomous and happy to take on big projects.</li>
+                        <li>You’re driven by a desire to solve problems day-in and day-out, at scale. You can quickly understand how something works, even when you haven’t seen it before.</li>
+                        <li>But you’re more than just your code! You love building a culture where people love to work (❤️). As one of the first employees, you’ll be integral to the long-term culture of Village and future employees will rely on you as a role model. You’ll be empathetic, hard-working, passionate, good at giving constructive feedback and, of course, having lots of fun.</li>
+                    </ul>
+                </div>
+                <div class="cell_responsibilities">
+                    Responsibilities
+                    <ul>
+                        <li id="responsibility_1"> Take on all the different varied projects that only an early-stage startup can throw at you</li>
+                        <li id="responsibility_2"> Work closely with our Product team to continuously improve our product and develop new solutions to user needs</li>
+                        <li id="responsibility_3"> Learn and build across the web and data stack as the team needs you, taking ownership over core features when needed</li>
+                        <li id="responsibility_4"> Maintain thorough test coverage on your code–we’re all owners here</li>
+                        <li id="responsibility_5"> Guide the early Village technical architecture decisions that will resonate throughout the global economy for years to come 🤯 </li>
+                        <li id="responsibility_6"> Be a thought leader, working directly with the founders to set and ship the vision</li>
+                        <li id="responsibility_7"> Establish the Village engineering culture–live the mission and set a standard </li>
+                        <li id="responsibility_8"> Have an inordinate amount of fun</li>
+                    </ul>
+                </div>
+                <div class="cell_requirements">
+                    Requirements
+                    <ul>
+                        <li id="requirement_1">Bachelors and/or master’s degree, computer science preferred</li>
+                        <li id="requirement_2">2+ years professional experience in one or more programming languages (e.g., Python, C, C++, Java, JavaScript)</li>
+                        <li id="requirement_3">Strong communication and collaboration skills </li>
+                        <li id="requirement_4">Excitement, ambition, and fun</li>
+                        <li id="requirement_5">Experience in React, Nextjs, and TypeScript is nice to have</li>
+                    </ul>
+                </div>
+                <div class="cell_benefits">
+                    Benefits
+                    <ul>
+                        <li id="benefit_1">A team of talented high achievers that values and invests in its people</li>
+                        <li id="benefit_2">Unlimited paid time off</li>
+                        <li id="benefit_3">Medical, dental, and vision</li>
+                        <li id="benefit_4">Early and generous employee stock option plan</li>
+                        <li id="benefit_5">$100 monthly health and wellness benefit</li>
+                        <li id="benefit_6">401(k) plan</li>
+                        <li id="benefit_7">Paid family leave</li>
+                        <li id="benefit_8">Apple products</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!--
+        <div class="row_job">
+          <div class="cell">B1</div>
+          <div class="cell">B2</div>
+        </div>
+        <div class="row_job">
+          <div class="cell">C1</div>
+          <div class="cell">C2</div>
+          <div class="cell">C3</div>
+          <div class="cell">C4</div>
+        </div>
+        -->
+    </div>
+    <form action="">
+        <div id="job_description_input">
+            
+        </div>
     </form>
 </body>
 </html>
