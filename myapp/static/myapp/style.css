@@ -25,13 +25,20 @@ table, th, td {
     flex: 1;
     text-align: center;
     padding: 10px;
+    border-top: 1px solid black;
     border-left: 1px solid black;
     box-sizing: border-box;
     border-bottom: 1px solid black;
 }
 
+.last_row_top_cell {
+    border-right: 1px solid black;
+}
+
 .row_description {
     padding: 10px;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
 }
 
 .row-top:first-child {
