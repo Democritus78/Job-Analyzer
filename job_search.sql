@@ -65,13 +65,13 @@ create table if not exists job_offer (
     fit_score               int check (fit_score >= 0 and fit_score <= 100) default 0 not null
 ) strict;
 
-create table if not exists job_description_bullet {
+create table if not exists job_description_bullet (
     id                      int primary key,
     job_offer_id            int not null,
     description_bullet      text check (length(bullet) <= 255) not null,
 
     foreign key (job_offer_id) references job_offer(id)
-} strict;
+) strict;
 
 create table if not exists job_responsibility (
     id                  int primary key,
