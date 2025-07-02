@@ -154,6 +154,15 @@ class JobBenefit(models.Model):
         db_table = 'job_benefit'
 
 
+class JobDescriptionBullet(models.Model):
+    job_offer = models.ForeignKey('JobOffer', models.DO_NOTHING)
+    description_bullet = models.TextField()
+
+    class Meta:
+        managed = False
+        db_table = 'job_description_bullet'
+
+
 class JobOffer(models.Model):
     company = models.TextField()
     job_id = models.IntegerField(blank=True, null=True)
