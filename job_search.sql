@@ -62,7 +62,7 @@ create table if not exists job_offer (
     date_posted             text default current_timestamp,
     date_applied            text default current_timestamp not null,
     application_status      text not null,
-    fit_score               int check (fit_score >= 0 and fit_score <= 100) default 0 not null,
+    fit_score               int check (fit_score >= 0 and fit_score <= 100) default 0 not null
 ) strict;
 
 create table if not exists job_description_bullet {
