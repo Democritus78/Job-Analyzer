@@ -1,3 +1,4 @@
+pragma foreign_keys = on;
 
 create table if not exists programming_language ( -- Skill
     id                  int primary key,
@@ -55,13 +56,22 @@ create table if not exists job_offer (
     job_id                  int,
     position                text check (length(position) <= 255) not null,
     location                text check (length(location) <= 255) not null,
-    description             text check (length(description) <= 255) not null,
+--    description             text check (length(description) <= 255) not null,
     salary                  text,    
     compensation_range      text check (length(compensation_range) <= 255),
     date_posted             text default current_timestamp,
     date_applied            text default current_timestamp not null,
-    application_status      text not null
+    application_status      text not null,
+    fit_score               int check (fit_score >= 0 and fit_score <= 100) default 0 not null,
 ) strict;
+
+create table if not exists job_description_bullet {
+    id                      int primary key,
+    job_offer_id            int not null,
+    description_bullet      text check (length(bullet) <= 255) not null,
+
+    foreign key (job_offer_id) references job_offer(id)
+} strict;
 
 create table if not exists job_responsibility (
     id                  int primary key,
