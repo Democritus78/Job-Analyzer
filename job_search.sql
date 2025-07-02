@@ -68,7 +68,7 @@ create table if not exists job_offer (
 create table if not exists job_description_bullet (
     id                      int primary key,
     job_offer_id            int not null,
-    description_bullet      text check (length(bullet) <= 255) not null,
+    description_bullet      text check (length(description_bullet) <= 255) not null,
 
     foreign key (job_offer_id) references job_offer(id)
 ) strict;
