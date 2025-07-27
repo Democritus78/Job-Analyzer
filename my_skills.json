@@ -1,0 +1,8 @@
+{
+    "Programming/Scripting/Markup Languages" : ["C", "C++", "Java", "Python", "SQL", "JavaScript", "HTML5/CSS", "Bash", "Perl5"],
+    "Concepts" : ["OOP - (Object-Oriented Programming)", "Software Development Life Cycle (SDLC): Agile Methodology", "AI: NLP", "Regex"],
+    "Software/Framework" : ["Django"],
+    "Tools" : ["Git", "Bazel", "Makefile", "CMake"],
+    "Database(s)" : ["SQLite", "MySQL", "LevelDB"],
+    "Cloud Platforms" : ["AWS"]
+}
