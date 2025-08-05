@@ -76,36 +76,328 @@
     <div>
         <h2>My Profile</h2>
         <ul id="Skills">
-            Programming Languages
-            <ul id="Programming Language">
+            Programming/Scripting/Markup Language(s)
+            <ul id="Programming/Scripting/Markup Language">
                 <li>C</li>
                 <li>C++</li>
                 <li>Java</li>
                 <li>Python</li>
                 <li>SQL</li>
-                <li>HTML</li>
                 <li>JavaScript</li>
+                <li>HTML5/CSS</li>
+                <li>Bash</li>
+                <li>Perl5</li>
+            </ul>
+            Concepts
+            <ul id="Concept">
+                <li>OOP - (Object-Oriented Programming)</li>
+                <li>Software Development Life Cycle (SDLC): Agile Methodology</li>
+                <!--<li></li>-->
+                <li>AI: NLP</li>
+                <li>Regex</li>
             </ul>
             Software/Framework
-            <ul id="Software">
+            <ul id="Software/Framework">
                 <li>Django</li>
-                <li>SQLite</li>
-                <li>Git</li>
-                <li>AWS (Cloud)</li>
-                <li>Bazel</li>
             </ul>
             Tools
             <ul id="Tools">
                 <li>Git</li>
-                <li>AWS (Cloud)</li>
-                <li>Bazel</li>
+                <li>Makefile</li>
             </ul>
             Database(s)
             <ul id="Database">
                 <li>SQLite</li>
+                <li>MySQL</li>
+                <li>LevelDB</li>
+            </ul>
+            Cloud Platform(s)
+            <ul id="Cloud Platform">
+                <li>AWS</li>
             </ul>
     </div>
+    <div>
+        <h2>My Project(s)</h2>
+        <ul>
+            <li>Job Analyzer/Search</li>
+            <li>Movie Filter/Recommendation System</li>
+            <li>Distributed File System</li>
+        </ul>
+        <form id="" method="POST">
+            {% csrf_token %}
+            <div>
+                <label for="project_name">Project Name:</label>
+                <input type="text" id="project_name" name="project_name" required>
+                <button type="submit">Add Project</button>
+            </div>
+            </br>
+            <button class="green-button-layout">Add Project</button>
+            <button class="grey-button-layout">Update Project</button>
+        </form>
+    </div>
+    <h2>New Job Offer</h2>
+    <form id="new_job_offer" method="POST">
+        {% csrf_token %}
+        <table style="padding-left: 10px">
+            <tr>
+                <td><label for="company_name">Company Name:</label></td>
+                <td><input type="text" id="company_name" name="company_name" required></td>
+            </tr>
+            <tr>
+                <td><label for="job_id">Job ID:</label></td>
+                <td><input type="text" id="job_id" name="job_id" placeholder="012335"></td>
+            </tr>
+            <tr>
+                <td><label for="position">Position:</label></td>
+                <td><input type="text" id="position" name="position" placeholder="Software Engineer" required></td>
+            </tr>
+            <tr>
+                <td><label for="about_the_job">About the Job:</label></td>
+                <td><textarea id="about_the_job" name="about_the_job" rows="9" cols="160" placeholder = "Type here..." required></textarea></td>
+            </tr>
+            <tr>
+                <td><label for="location">Location:</label></td>
+                <td><input type="text" id="location" name="location" placeholder="City, State" required></td>
+            </tr>
+            <tr>
+                <td><label for="salary">Salary:</label></td>
+                <td><input type="text" id="salary" name="salary" placeholder="$34k, $34,500, or $30-40k" required></td>
+            </tr>
+                <td><label for="responsibilities">Responsibilities:</label></td>
+                <td><textarea id="responsibilities" name="responsibilities" rows="9" cols="160" placeholder = "Type here..." required></textarea></td>
+            </tr>
+            <tr>
+                <td><label for="requirements">Requirements:</label></td>
+                <td><textarea id="requirements" name="requirements" rows="9" cols="160" placeholder = "Type here..." required></textarea></td>
+            </tr>
+            </tr>
+                <td><label for="benefits">Benefits:</label></td>
+                <td><textarea id="benefits" name="benefits" rows="9" cols="160" placeholder = "Type here..." required></textarea></td>
+            </tr>
+        </table>
+        <script>
+        
+            const company_name = document.getElementById('company_name');
+            const job_id = document.getElementById('job_id');
+            const position = document.getElementById('position');
+            const about_the_job = document.getElementById('about_the_job');
+            const job_location = document.getElementById('location');
+            const salary = document.getElementById('salary');
+            const responsibilities = document.getElementById('responsibilities');
+            const requirements = document.getElementById('requirements');
+            const benefits = document.getElementById('benefits');
+    
+            
+            function extract_job_offer() {
+                let name = company_name.value.trim();
+                let id;
+                if (!(job_id.value === "")) {
+                    id = job_id.value;
+                }
+                
+                let job_position = position.value.trim();
+                let job_description = about_the_job.value.split('\n');
+                job_description = job_description.map(function(item) { return item.trim(); });
+                job_location = job_location.value.trim();
+    
+                let job_salary;
+                if (!(salary.value === "")) {
+                    job_salary = salary.value.trim();
+                }
+                
+                let job_responsibilities = responsibilities.value.split('\n');
+                job_responsibilities = job_responsibilities.map(function(item) { return item.trim(); });
+                let job_requirements = requirements.value.split('\n');
+                job_requirements = job_requirements.map(function(item) { return item.trim(); });
+                let job_benefits = benefits.value.split('\n');
+                job_benefits = job_benefits.map(function(item) { return item.trim(); });
+    
+                document.getElementById('popUpWindow').style.display = 'inline';
+            }
+            
+            
+            /*
+            function fix_multiline_text(textarea) {
+                // Split the text by new lines, trim each line, and join them back with a single new line
+                return textarea.value.split('\n').map(function(item) { 
+                    if (item.length === 0) {return item.trim(); }).join('\n');
+            }
+            */
+    
+            function fix_job_offer_format() {
+                company_name.value = company_name.value.trim();
+                job_id.value = job_id.value.trim();
+                position.value = position.value.trim();
+                
+                //about_the_job.value = about_the_job.value.split('\n').map(function(item)  { return item.trim(); }).filter(line => line !== "").map(item => item = '- ' + item).join('\n');
+                about_the_job.value = about_the_job.value.split('\n').map(item => item.trim()).filter(line => line !== "").map(item => item = '- ' + item).join('\n');
+    
+                job_location.value = job_location.value.trim();
+                
+                salary.value = salary.value.trim();
+                
+                responsibilities.value = responsibilities.value.split('\n').map(item => item.trim()).filter(line => line !== "").map(item => item = '- ' + item).join('\n');
+                
+                requirements.value = requirements.value.split('\n').map(item => item.trim()).filter(line => line !== "").map(item => item = '- ' + item).join('\n');
+                
+                benefits.value = benefits.value.split('\n').map(item => item.trim()).filter(line => line !== "").map(item => item = '- ' + item).join('\n');
+            }
+    
+            function clear_job_offer() {
+                company_name.value = '';
+                job_id.value = '';
+                position.value = '';
+                about_the_job.value = '';
+                job_location.value = '';
+                salary.value = '';
+                responsibilities.value = '';
+                requirements.value = '';
+                benefits.value = '';
+            }
+        </script>
+        <!--
+        <script>
+            const company_name = document.getElementById('company_name');
+            const job_id = document.getElementById('job_id');
+            const position = document.getElementById('position');
+            const about_the_job = document.getElementById('about_the_job');
+            const location = document.getElementById('location');
+            const salary = document.getElementById('salary');
+            const responsibilities = document.getElementById('responsibilities');
+            const requirements = document.getElementById('requirements');
+            const benefits = document.getElementById('benefits');
+
+            function clear_job_offer() {
+                company_name.value = '';
+                job_id.value = '';
+                position.value = '';
+                about_the_job.value = '';
+                location.value = '';
+                salary.value = '';
+                responsibilities.value = '';
+                requirements.value = '';
+                benefits.value = '';
+            }
+        </script>
+        -->
+        <!--<button type="submit" onclick="document.getElementById(pop-up-window).style.display = block;">Add Job Offer</button>-->
+        <button type="submit" class="green-button-layout">Add Job Offer</button>
+        <button type='button' class="grey-button-layout" onclick="fix_job_offer_format()">Fix Text Format</button>
+        <button type="button" class="red-button-layout" onclick="clear_job_offer()">Cancel Job Offer</button>
+    </form>
+
+    <!--
+    <div id="pop-up-window" class="pop-up-window">
+        <div>Extracted Job Offer</div>
+        <div id="pop-up-window-content"></div>
+
+        <p>Are you ready to analyze the offer?</p>
+        <form id="pop-up-window-feedback" method="POST">        
+            // comment out!!! <label for="submit">Yes, </label>
+            // comment out!!! <button id="submit" type="submit" style="background-color: green; color: white; border: 1px solid white;">Yes, Analyze</button>
+            <button id="submit" type="submit" class="green-button-layout">Yes, Analyze</button>
+            // comment out!!! <button id="cancel" type="button" style="background-color: red; color: white; border: 1px solid white;" onclick="">No, Cancel</button>
+            <button id="cancel" type="button" class="red-button-layout" onclick="clear_job_offer()">No, Cancel</button>
+        </form>
+    </div>
+    -->
     <h2>Job Offer(s)</h2>
+    <form id="score_calculation" method="POST">
+        {% csrf_token %}
+        <button type="submit">Calculate Score</button>
+    </form>
+    </br>
+    <form id="offer_update" method="POST">
+        {% csrf_token %}
+        <button type="button" onclick="document.getElementById('update-job-offer-window').style.display='block'" class="green-button-layout">Update Job Offer</button>
+        <button type="button" onclick="document.getElementById('hide-job-offer-window').style.display='block'" class="grey-button-layout">Hide Job Offer</button>
+        <button type="button" onclick="document.getElementById('remove-job-offer-window').style.display='block'" class="red-button-layout">Remove Job Offer</button>
+    </form>
+    </br>
+
+    <div id="update-job-offer-window" class="pop-up-window">
+        <div class="pop-up-window-content">
+            <label for="close_button">Job Offer</label>
+            <button name="close_button" type="button" onclick="document.getElementById('update-job-offer-window').style.display='none';" class="pop-up-window-close grey-button-layout" style="right: 10px">X</button>
+            </br>
+            <!--<span class="pop-up-window-close">&times;</span>-->
+            <form method="POST">
+                {% csrf_token %}
+                <table style="padding-left: 10px">
+                    <tr>
+                        <td><label for="sql_id">SQL ID:</label></td>
+                        <td><input type="text" id="update_sql_id" name="sql_id"></button></td>
+                    </tr>
+                    <tr>
+                        <td><label for="job_status">Application Status:</label></td>
+                        <td><input type="text" id="application_status" name="job_status"></input></td>
+                    </tr>
+                </table>
+                <button type="submit" class="green-button-layout">Submit</button>
+                <button type="button" class="red-button-layout" onclick="cancel_popup_window('update');">Cancel</button>
+            </form>
+        </div>
+    </div>
+    <div id="hide-job-offer-window" class="pop-up-window">
+        <div class="pop-up-window-content">
+            <label for="close_button">Job Offer</label>
+            <button name="close_button" type="button" onclick="document.getElementById('hide-job-offer-window').style.display='none'" class="pop-up-window-close grey-button-layout">X</button>
+            </br>
+            <form method="POST">
+                {% csrf_token %}
+                <table style="padding-left: 10px">
+                    <tr>
+                        <td><label for="sql_id">SQL ID:</label></td>
+                        <td><input type="text" id="hide_sql_id" name="sql_id"></button></td>
+                    </tr>
+                </table>
+                <button type="submit" class="green-button-layout">Submit</button>
+                <button type="button" class="red-button-layout" onclick="cancel_popup_window('hide');">Cancel</button>
+            </form>
+        </div>
+    </div>
+    <div id="remove-job-offer-window" class="pop-up-window">
+        <div class="pop-up-window-content">
+            <label for="close_button">Job Offer</label>
+            <button name="close_button" type="button" onclick="document.getElementById('remove-job-offer-window').style.display='none'" class="pop-up-window-close grey-button-layout">X</button>
+            </br>
+            <form action="#" method="POST">
+                {% csrf_token %}
+                <table style="padding-left: 10px">
+                    <tr>
+                        <td><label for="sql_id">SQL ID:</label></td>
+                        <td><input type="text" id="remove_sql_id" name="sql_id"></button></td>
+                    </tr>
+                    <!--
+                    <tr>
+                        <td><label for="job_field">Status:</label></td>
+                        <td><input type="text" name="job_field"></input></td>
+                    </tr>
+                    -->
+                </table>
+                <button type="submit" class="green-button-layout">Submit</button>
+                <button type="button" class="red-button-layout" onclick="cancel_popup_window('remove');">Cancel</button>
+            </form>
+        </div>
+    </div>
+    <script>
+        function cancel_popup_window(id) {
+            document.getElementById(id+'-job-offer-window').style.display = 'none';
+
+            switch (id) {
+            case 'update':
+                document.getElementById("update_sql_id").value = '';
+                document.getElementById("application_status").value = '';
+                break;
+            case 'hide':
+                document.getElementById("hide_sql_id").value = '';
+                break;
+            case 'remove':
+                document.getElementById("remove_sql_id").value = '';
+                break;
+            }
+        }
+    </script>
     <!--
     <table id="Job Offer table" style="width:100%">
         <tr id="">
@@ -191,35 +483,31 @@
         </tr>
     </table>
     -->
-    <!--
     <div class="custom-table">
-        <div class="row">
-          <div class="cell">A1</div>
-          <div class="cell">A2</div>
-          <div class="cell">A3</div>
+        <div class="custom-table-header" style="display: flex;">
+            <div class="custom-table-header-cell">Company Logo</div>
+            <div class="custom-table-header-cell">SQL ID</div>
+            <div class="custom-table-header-cell">Company Name</div>
+            <div class="custom-table-header-cell">Job ID</div>
+            <div class="custom-table-header-cell">Position</div>
+            <div class="custom-table-header-cell">Location</div>
+            <div class="custom-table-header-cell">Salary</div>
+            <div class="custom-table-header-cell">Application Status</div>
+            <div class="custom-table-header-cell" style="border-right: 1px solid black;">Score</div>
         </div>
-        <div class="row">
-          <div class="cell">B1</div>
-          <div class="cell">B2</div>
-        </div>
-        <div class="row">
-          <div class="cell">C1</div>
-          <div class="cell">C2</div>
-          <div class="cell">C3</div>
-          <div class="cell">C4</div>
-        </div>
-    </div>
-    -->
-    <div class="custom-table">
         <div class="row_job">
             <div class="row_top">
-                <div class="cell_company_logo"></div>
+                <div class="cell_company_logo">
+                    <!--<img src="{% static 'myapp/village-labs-logo.png' %}" style="width: 50px; height: 50px;">-->
+                </div>
                 <div class="cell_company_name">Village Labs</div>
+                <div>N/A</div>
                 <div class="cell_job_id">N/A</div>
                 <div class="cell_job_position">Software Engineer</div>
                 <div class="cell_job_location">Atlanta, GA</div>
                 <div class="cell_job_salary">N/A</div>
-                <div class="last_row_top_cell">Application Pending</div>
+                <div>Pending</div>
+                <div class="last_row_top_cell" style="border-right: 1px solid black;"></div>
             </div>
             <div class="row_description">
                 <div class="cell_about_the_job">
@@ -271,23 +559,6 @@
                 </div>
             </div>
         </div>
-        <!--
-        <div class="row_job">
-          <div class="cell">B1</div>
-          <div class="cell">B2</div>
-        </div>
-        <div class="row_job">
-          <div class="cell">C1</div>
-          <div class="cell">C2</div>
-          <div class="cell">C3</div>
-          <div class="cell">C4</div>
-        </div>
-        -->
     </div>
-    <form action="">
-        <div id="job_description_input">
-            
-        </div>
-    </form>
 </body>
 </html>
