@@ -15,7 +15,7 @@
         - [ ] Modify view.py's index method to return list of all job offer details.
         - [ ] Add Django template tag logic to index.html file to display the various lists of your skills, job offers, fit scores, and the company logos.
     - [ ] Set up "Calculate Score" button to calculate fit score of job offer
-        Tasks
+        - Tasks
         - [ ] Modify index.html's "Calculate Score" button to include a name attribute equal to submission and a value attribute equal to calculate_score.
         - [ ] Modify view.py to calculate the fit score of all job offers, when "Calculate Score" button is clicked.
     - [ ] Modify view.py's index method to return a sorted list of job offers' fit scores, in descending order.
