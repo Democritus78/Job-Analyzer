@@ -1,10 +1,10 @@
 - Phases 1
     - Goals
-    - [+] Create Skills file.
-    - [+] Update job_search.sql file to include correct tables and update sqlite database
+    - [x] Create Skills file.
+    - [x] Update job_search.sql file to include correct tables and update sqlite database
         - Task(s)
-        - [+] Add skill, skill_alias, my_skill, my_project_skill, job_offer, job_description_bullet, job_responsibility, job_requirement, job_benefit, and job_offer_skill tables to sqlite database.
-        - [+] Add old_job_offer table to sqlite database.
+        - [x] Add skill, skill_alias, my_skill, my_project_skill, job_offer, job_description_bullet, job_responsibility, job_requirement, job_benefit, and job_offer_skill tables to sqlite database.
+        - [x] Add old_job_offer table to sqlite database.
     - [ ] Use Python script to add data to sqlite database.
     - [ ] Set up calculate score function, in view.py, to calculate the fit score of a job offer.
     - [ ] Implement extraction, analysis, storing offer/score, and displaying results of job offers.
