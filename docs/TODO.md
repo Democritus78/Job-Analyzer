@@ -1,28 +1,28 @@
 Phases 1
     Goals
-    [+] Create Skills file.
-    [+] Update job_search.sql file to include correct tables and update sqlite database
+    -[+] Create Skills file.
+    -[+] Update job_search.sql file to include correct tables and update sqlite database
         Task(s)
-        [+] Add skill, skill_alias, my_skill, my_project_skill, job_offer, job_description_bullet, job_responsibility, job_requirement, job_benefit, and job_offer_skill tables to sqlite database.
-        [+] Add old_job_offer table to sqlite database.
-    [ ] Use Python script to add data to sqlite database.
-    [ ] Set up calculate score function, in view.py, to calculate the fit score of a job offer.
-    [ ] Implement extraction, analysis, storing offer/score, and displaying results of job offers.
+        -[+] Add skill, skill_alias, my_skill, my_project_skill, job_offer, job_description_bullet, job_responsibility, job_requirement, job_benefit, and job_offer_skill tables to sqlite database.
+        -[+] Add old_job_offer table to sqlite database.
+    -[ ] Use Python script to add data to sqlite database.
+    -[ ] Set up calculate score function, in view.py, to calculate the fit score of a job offer.
+    -[ ] Implement extraction, analysis, storing offer/score, and displaying results of job offers.
         Tasks
-        [ ] Modify view.py's index method to extract job offer detail when "Add Job Offer" submission button is clicked.
-        [ ] Integrate calculate score function into index function.
-        [ ] Store extracted job offer details and score in job offer table sqlite.
-        [ ] Modify view.py's index method to return list of all job offer details.
-        [ ] Add Django template tag logic to index.html file to display the various lists of your skills, job offers, fit scores, and the company logos.
-    [ ] Set up "Calculate Score" button to calculate fit score of job offer
+        -[ ] Modify view.py's index method to extract job offer detail when "Add Job Offer" submission button is clicked.
+        -[ ] Integrate calculate score function into index function.
+        -[ ] Store extracted job offer details and score in job offer table sqlite.
+        -[ ] Modify view.py's index method to return list of all job offer details.
+        -[ ] Add Django template tag logic to index.html file to display the various lists of your skills, job offers, fit scores, and the company logos.
+    -[ ] Set up "Calculate Score" button to calculate fit score of job offer
         Tasks
-        [ ] Modify index.html's "Calculate Score" button to include a name attribute equal to submission and a value attribute equal to calculate_score.
-        [ ] Modify view.py to calculate the fit score of all job offers, when "Calculate Score" button is clicked.
-    [ ] Modify view.py's index method to return a sorted list of job offers' fit scores, in descending order.
-    [ ] Implement "Update Job Offer" button.
+        -[ ] Modify index.html's "Calculate Score" button to include a name attribute equal to submission and a value attribute equal to calculate_score.
+        -[ ] Modify view.py to calculate the fit score of all job offers, when "Calculate Score" button is clicked.
+    -[ ] Modify view.py's index method to return a sorted list of job offers' fit scores, in descending order.
+    -[ ] Implement "Update Job Offer" button.
         Tasks
-    [ ] Implement "Remove Job Offer" button.
+    -[ ] Implement "Remove Job Offer" button.
         Tasks
-    [ ] Modify current index.html to collapse each job's various list, when the list name is clicked.
+    -[ ] Modify current index.html to collapse each job's various list, when the list name is clicked.
         Task(s)
-        [ ] Convert the various row descriptions divs, about a job offer, into items in an unordered list.
+        -[ ] Convert the various row descriptions divs, about a job offer, into items in an unordered list.
