@@ -5,7 +5,7 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 
 # Must be passed a list of skill ids
-def fit_score(job_offer_skill_ids: list[int]) -> int:
+def fit_score(job_offer_skill_ids: tuple[int]) -> int:
     conn = sqlite3.connect('/Users/stevencrowther/Documents/Coding/web development/job_search-root/db.sqlite3')
     cursor = conn.cursor()
     sum = 0
@@ -26,9 +26,9 @@ def fit_score(job_offer_skill_ids: list[int]) -> int:
     # Option 1 end
     '''
     # Option 2 start
-    skills = ','.join("?" for _ in job_offer_skill_ids)
-    print(job_offer_skill_ids)
-    cursor.execute(f'select count(id) from my_skill where skill_id in ({skills})', job_offer_skill_ids)
+    skill_ids = ','.join("?" for _ in job_offer_skill_ids)
+    cursor.execute(f'select count(skill_id) from my_skill where skill_id in ({skill_ids})', job_offer_skill_ids)
+    
     sum = cursor.fetchone()[0]
     # Option 2 end
     
@@ -132,7 +132,9 @@ def index(request):
                         if id not in job_offer_skill_ids:
                             job_offer_skill_ids.add(id)
                             print(f'\tskill found: {name}')
-                        
+            
+            print(f'fit_score of job offer: {fit_score(tuple(job_offer_skill_ids))}')
+            
             benefits = request.POST.get('benefits')
             if len(benefits) != 3:
                 benefits = benefits.split('\n')
