@@ -168,16 +168,25 @@ class JobOffer(models.Model):
     job_id = models.IntegerField(blank=True, null=True)
     position = models.TextField()
     location = models.TextField()
-    description = models.TextField()
     salary = models.TextField(blank=True, null=True)
-    compensation_range = models.TextField(blank=True, null=True)
     date_posted = models.TextField(blank=True, null=True)
-    date_applied = models.TextField()
-    application_status = models.TextField()
+    date_applied = models.TextField(blank=True, null=True)
+    application_status = models.TextField(blank=True, null=True)
+    fit_score = models.IntegerField()
 
     class Meta:
         managed = False
         db_table = 'job_offer'
+
+
+class JobOfferSkill(models.Model):
+    pk = models.CompositePrimaryKey('job_offer_id', 'skill_id')
+    job_offer = models.ForeignKey(JobOffer, models.DO_NOTHING)
+    skill = models.ForeignKey('Skill', models.DO_NOTHING)
+
+    class Meta:
+        managed = False
+        db_table = 'job_offer_skill'
 
 
 class JobRequirement(models.Model):
@@ -211,12 +220,46 @@ class MyProject(models.Model):
         db_table = 'my_project'
 
 
+class MyProjectSkill(models.Model):
+    pk = models.CompositePrimaryKey('my_project_id', 'skill_id')
+    my_project = models.ForeignKey(MyProject, models.DO_NOTHING)
+    skill = models.ForeignKey('Skill', models.DO_NOTHING)
+
+    class Meta:
+        managed = False
+        db_table = 'my_project_skill'
+
+
+class MySkill(models.Model):
+    skill = models.ForeignKey('Skill', models.DO_NOTHING)
+
+    class Meta:
+        managed = False
+        db_table = 'my_skill'
+
+
 class MyappPerson(models.Model):
     name = models.CharField(max_length=100)
 
     class Meta:
         managed = False
         db_table = 'myapp_person'
+
+
+class OldJobOffer(models.Model):
+    company = models.TextField()
+    job_id = models.IntegerField(blank=True, null=True)
+    position = models.TextField()
+    location = models.TextField()
+    salary = models.TextField(blank=True, null=True)
+    date_posted = models.TextField(blank=True, null=True)
+    date_applied = models.TextField()
+    application_status = models.TextField()
+    fit_score = models.IntegerField()
+
+    class Meta:
+        managed = False
+        db_table = 'old_job_offer'
 
 
 class ProgrammingLanguage(models.Model):
@@ -226,6 +269,24 @@ class ProgrammingLanguage(models.Model):
     class Meta:
         managed = False
         db_table = 'programming_language'
+
+
+class Skill(models.Model):
+    type = models.TextField()
+    name = models.TextField()
+
+    class Meta:
+        managed = False
+        db_table = 'skill'
+
+
+class SkillAlias(models.Model):
+    skill = models.ForeignKey(Skill, models.DO_NOTHING)
+    alias = models.TextField()
+
+    class Meta:
+        managed = False
+        db_table = 'skill_alias'
 
 
 class Tools(models.Model):
