@@ -93,7 +93,7 @@
                 <li>OOP - (Object-Oriented Programming)</li>
                 <li>Software Development Life Cycle (SDLC): Agile Methodology</li>
                 <!--<li></li>-->
-                <li>AI: NLP</li>
+                <!--<li>AI: NLP</li>-->
                 <li>Regex</li>
             </ul>
             Software/Framework
@@ -108,12 +108,12 @@
             Database(s)
             <ul id="Database">
                 <li>SQLite</li>
-                <li>MySQL</li>
+                <!--<li>MySQL</li>-->
                 <li>LevelDB</li>
             </ul>
             Cloud Platform(s)
             <ul id="Cloud Platform">
-                <li>AWS</li>
+                <!--<li>AWS</li>-->
             </ul>
     </div>
     <div>
@@ -333,6 +333,9 @@
                         <td><input type="text" id="update_sql_id" name="sql_id"></button></td>
                     </tr>
                     <tr>
+                        <td>Use: applied, interview, offer, rejected, or withdrawn</td>
+                    </tr>
+                    <tr>
                         <td><label for="job_status">Application Status:</label></td>
                         <td><input type="text" id="application_status" name="job_status"></input></td>
                     </tr>
@@ -496,14 +499,19 @@
             <div class="custom-table-header-cell">Position</div>
             <div class="custom-table-header-cell">Location</div>
             <div class="custom-table-header-cell">Salary</div>
+            <div class="custom-table-header-cell">Date Posted</div>
+            <div class="custom-table-header-cell">Date Applied</div>
             <div class="custom-table-header-cell">Application Status</div>
             <div class="custom-table-header-cell" style="border-right: 1px solid black;">Score</div>
         </div>
+        <!--
         <div class="row_job">
             <div class="row_top">
-                <div class="cell_company_logo">
+                <div class="cell_company_logo">-->
                     <!--<img src="{% static 'myapp/village-labs-logo.png' %}" style="width: 50px; height: 50px;">-->
+                    <!--
                 </div>
+                <div></div>
                 <div class="cell_company_name">Village Labs</div>
                 <div>N/A</div>
                 <div class="cell_job_id">N/A</div>
@@ -563,6 +571,74 @@
                 </div>
             </div>
         </div>
+        -->
+        {% for job_posting in job_postings %}
+        <div>
+            <div class="row_top">
+                <div></div>
+                <div>{{ job_posting.sql_id }}</div>
+                <div>{{ job_posting.company }}</div>
+                <div>{{ job_posting.job_id }}</div>
+                <div>{{ job_posting.position }}</div>
+                <div>{{ job_posting.location }}</div>
+                <div>{{ job_posting.salary }}</div>
+                <div>{{ job_posting.date_posted }}</div>
+                <div>{{ job_posting.date_applied }}</div>
+                <div>{{ job_posting.application_status }}</div>
+                <div style="border-right: 1px solid black;">{{ job_posting.fit_score }}</div>
+            </div>
+            <div class="row_description">
+                <div>
+                    About the Job
+                    <ul>
+                        {% for description_bullet in job_posting.description%}
+                        <li>{{ description_bullet }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div>
+                    Responsibilities
+                    <ul>
+                        {% for responsibility in job_posting.responsibilities %}
+                        <li>{{ responsibility }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div>
+                    Requirements
+                    <ul>
+                        {% for requirement in job_posting.requirements %}
+                        <li>{{ requirement }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div>
+                    Benefits
+                    <ul>
+                        {% for benefit in job_posting.benefits %}
+                        <li>{{ benefit }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div>
+                    Job Offer Skills
+                    <ul>
+                        {% for skill in job_posting.skills %}
+                        <li>{{ skill }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div>
+                    My Applicable Skill(s)
+                    <ul>
+                        {% for my_skill in job_posting.my_skills %}
+                        <li>{{ my_skill }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
     </div>
 </body>
 </html>

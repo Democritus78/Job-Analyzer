@@ -232,7 +232,7 @@ def index(request):
             #cursor = conn.execute(f'select skill_id from job_offer_skill where job_offer_id = (?)', [job_offer_id])
             #results = cursor.fetchall()
             #skill_ids = [result[0] for result in results]
-            placeholder = ','.join('?' for _ in job_offer_skill_ids)
+            #placeholder = ','.join('?' for _ in job_offer_skill_ids)
             '''
             cursor = conn.execute(f'select id, name from skill where id in ({placeholder})', list(job_offer_skill_ids))
             results = cursor.fetchall()
@@ -246,6 +246,104 @@ def index(request):
         elif action == 'cancel_job_offer':
             pass
         
-        return HttpResponseRedirect('/')
+        #return HttpResponseRedirect('/')
     
-    return render(request, 'myapp/index.html')
+    connection = sqlite3.connect('/Users/stevencrowther/Documents/Coding/web development/job_search-root/db.sqlite3')
+    cursor = connection.cursor()
+    
+    cursor.execute('select id, company, job_id, position, location, salary, date_posted, date_applied, application_status, fit_score from job_offer')
+    job_offer_results = cursor.fetchall()
+    job_offers = {}
+    for job_offer_result in job_offer_results:
+        job_offers[job_offer_result[0]] = {
+            'sql_id' : job_offer_result[0],
+            'company' : job_offer_result[1],
+            'job_id' : job_offer_result[2],
+            'position' : job_offer_result[3],
+            'location' : job_offer_result[4],
+            'salary' : job_offer_result[5],
+            'date_posted' : job_offer_result[6],
+            'date_applied' : job_offer_result[7],
+            'application_status' : job_offer_result[8],
+            'fit_score' : job_offer_result[9],
+            'description' : [],
+            'responsibilities' : [],
+            'requirements' : [],
+            'benefits' : [],
+            'skills' : [],
+            'my_skills' : []
+        }
+    cursor.execute('select id, name from skill')
+    skill_results = cursor.fetchall()
+    skill_results = { skill_result[0] : skill_result[1] for skill_result in skill_results }
+
+    
+    cursor.execute('select job_offer_id, skill_id from job_offer_skill')
+    job_offer_skill_results = cursor.fetchall()
+    
+    cursor.execute('select id, skill_id from my_skill')
+    my_skill_results = cursor.fetchall()
+    my_skill_set = set(my_skill_result[1] for my_skill_result in my_skill_results)
+    
+    #print(f'My skill ids {my_skill_set}')
+    #print(job_offer_skill_results)
+    for job_offer_skill_result in job_offer_skill_results:
+        '''
+        if 'skills' not in job_offers[job_offer_skill_result[0]].keys():
+            job_offers[job_offer_skill_result[0]]['skills'] = [skill_results[job_offer_skill_result[1]]]
+        else:
+        '''
+        job_offers[job_offer_skill_result[0]]['skills'].append(skill_results[job_offer_skill_result[1]])
+        
+        # Displays my skills that are also job posting skills
+        if job_offer_skill_result[1] in my_skill_set:
+            #print(f'my matching skill: {skill_results[job_offer_skill_result[1]]}')
+            job_offers[job_offer_skill_result[0]]['my_skills'].append(skill_results[job_offer_skill_result[1]])
+    
+    cursor.execute('select id, job_offer_id, benefit from job_benefit')
+    job_benefit_results = cursor.fetchall()
+    for job_benefit_result in job_benefit_results:
+        '''
+        if 'benefits' not in job_offers[job_benefit_result[1]].keys():
+            job_offers[job_benefit_result[1]]['benefits'] = [job_benefit_result[2]]
+        else:
+        '''
+        job_offers[job_benefit_result[1]]['benefits'].append(job_benefit_result[2])
+    
+    cursor.execute('select id, job_offer_id, description_bullet from job_description_bullet')
+    job_description_bullet_results = cursor.fetchall()
+    for job_description_bullet_result in job_description_bullet_results:
+        '''
+        if 'description' not in job_offers[job_description_bullet_result[1]].keys():
+            job_offers[job_description_bullet_result[1]]['description'] = [job_description_bullet_result[2]]
+        else:
+        '''
+        job_offers[job_description_bullet_result[1]]['description'].append(job_description_bullet_result[2])
+    
+    cursor.execute('select id, job_offer_id, requirement from job_requirement')
+    job_requirement_results = cursor.fetchall()
+    #print('Requirements:')
+    #print(job_requirement_results)
+    for job_requirement_result in job_requirement_results:
+        '''
+        if 'requirement' not in job_offers[job_requirement_result[1]].keys():
+            job_offers[job_requirement_result[1]]['requirement'] = [job_requirement_result[2]]
+        else:
+        '''
+        #print(f'job offer id: {job_requirement_result[2]}')
+        job_offers[job_requirement_result[1]]['requirements'].append(job_requirement_result[2])
+    
+    cursor.execute('select id, job_offer_id, responsibility from job_responsibility')
+    job_responsibility_results = cursor.fetchall()
+    for job_responsibility_result in job_responsibility_results:
+        '''
+        if 'responsibility' not in job_offers[job_requirement_result[1]].keys():
+            job_offers[job_responsibility_result[1]]['responsibility'] = [job_responsibility_result[2]]
+        else:
+        '''
+        job_offers[job_responsibility_result[1]]['responsibilities'].append(job_responsibility_result[2])
+    
+    job_offers = [job_offer for job_offer in job_offers.values()]
+    #print(job_offers)
+    context = { "job_postings" : job_offers }
+    return render(request, 'myapp/index.html', context)
