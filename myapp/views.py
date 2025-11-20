@@ -240,9 +240,15 @@ def index(request):
             for result in results:
                 print(f'\tID: {result[0]} Name: {result[1]}')
             '''
-            
         elif action == 'update_job_offer':
-            pass
+            job_posting_sql_id = request.POST.get('sql_id')
+            #print(f'job offer sql id": {job_posting_sql_id}')
+            job_posting_status = request.POST.get('job_status').lower()
+            #print(f'job offer status: {job_posting_status}')
+            conn = sqlite3.connect('/Users/stevencrowther/Documents/Coding/web development/job_search-root/db.sqlite3')
+            cursor = conn.cursor()
+            cursor.execute(f'update job_offer set application_status = ? where id = ?', (job_posting_status, job_posting_sql_id))
+            conn.commit()
         elif action == 'cancel_job_offer':
             pass
         
@@ -287,6 +293,12 @@ def index(request):
     
     #print(f'My skill ids {my_skill_set}')
     #print(job_offer_skill_results)
+    '''
+    print(f'My matching skills for:')
+    print(f'\tjob offer: {job_offer_result[0]}')
+    print(f'\tcompany: {job_offer_result[1]}')
+    print(f'\tposition: {job_offer_result[3]}')
+    '''
     for job_offer_skill_result in job_offer_skill_results:
         '''
         if 'skills' not in job_offers[job_offer_skill_result[0]].keys():
@@ -297,7 +309,7 @@ def index(request):
         
         # Displays my skills that are also job posting skills
         if job_offer_skill_result[1] in my_skill_set:
-            #print(f'my matching skill: {skill_results[job_offer_skill_result[1]]}')
+            #print(f'\t\t{skill_results[job_offer_skill_result[1]]}')
             job_offers[job_offer_skill_result[0]]['my_skills'].append(skill_results[job_offer_skill_result[1]])
     
     cursor.execute('select id, job_offer_id, benefit from job_benefit')

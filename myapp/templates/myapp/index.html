@@ -330,7 +330,7 @@
                 <table style="padding-left: 10px">
                     <tr>
                         <td><label for="sql_id">SQL ID:</label></td>
-                        <td><input type="text" id="update_sql_id" name="sql_id"></button></td>
+                        <td><input type="text" id="sql_id" name="sql_id"></button></td>
                     </tr>
                     <tr>
                         <td>Use: applied, interview, offer, rejected, or withdrawn</td>
@@ -340,7 +340,7 @@
                         <td><input type="text" id="application_status" name="job_status"></input></td>
                     </tr>
                 </table>
-                <button type="submit" class="green-button-layout">Submit</button>
+                <button type="submit" class="green-button-layout" name="action" value="update_job_offer">Submit</button>
                 <button type="button" class="red-button-layout" onclick="cancel_popup_window('update');">Cancel</button>
             </form>
         </div>
