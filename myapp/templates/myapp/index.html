@@ -315,7 +315,7 @@
         {% csrf_token %}
         <button type="button" onclick="document.getElementById('update-job-offer-window').style.display='block'" class="green-button-layout">Update Job Offer</button>
         <button type="button" onclick="document.getElementById('hide-job-offer-window').style.display='block'" class="grey-button-layout">Hide Job Offer</button>
-        <button type="button" onclick="document.getElementById('remove-job-offer-window').style.display='block'" class="red-button-layout">Remove Job Offer</button>
+        <!--<button type="button" onclick="document.getElementById('remove-job-offer-window').style.display='block'" class="red-button-layout">Remove Job Offer</button>-->
     </form>
     </br>
 
@@ -363,6 +363,7 @@
             </form>
         </div>
     </div>
+    <!--
     <div id="remove-job-offer-window" class="pop-up-window">
         <div class="pop-up-window-content">
             <label for="close_button">Job Offer</label>
@@ -375,18 +376,19 @@
                         <td><label for="sql_id">SQL ID:</label></td>
                         <td><input type="text" id="remove_sql_id" name="sql_id"></button></td>
                     </tr>
-                    <!--
+                    
                     <tr>
                         <td><label for="job_field">Status:</label></td>
                         <td><input type="text" name="job_field"></input></td>
                     </tr>
-                    -->
+                    
                 </table>
                 <button type="submit" class="green-button-layout">Submit</button>
                 <button type="button" class="red-button-layout" onclick="cancel_popup_window('remove');">Cancel</button>
             </form>
         </div>
     </div>
+    -->
     <script>
         function cancel_popup_window(id) {
             document.getElementById(id+'-job-offer-window').style.display = 'none';
