@@ -249,8 +249,15 @@ def index(request):
             cursor = conn.cursor()
             cursor.execute(f'update job_offer set application_status = ? where id = ?', (job_posting_status, job_posting_sql_id))
             conn.commit()
-        elif action == 'cancel_job_offer':
-            pass
+        elif action == 'hide_job_offer':
+            job_posting_sql_id = int(request.POST.get('sql_id'))
+            print(type(job_posting_sql_id))
+            conn = sqlite3.connect('/Users/stevencrowther/Documents/Coding/web development/job_search-root/db.sqlite3')
+            cursor = conn.cursor()
+            cursor.execute(f'insert into old_job_offer select * from job_offer where id = ?', [job_posting_sql_id])
+            conn.commit()
+            cursor.execute(f'delete from job_offer where id = ?',[job_posting_sql_id])
+            conn.commit()
         
         #return HttpResponseRedirect('/')
     
@@ -305,12 +312,18 @@ def index(request):
             job_offers[job_offer_skill_result[0]]['skills'] = [skill_results[job_offer_skill_result[1]]]
         else:
         '''
-        job_offers[job_offer_skill_result[0]]['skills'].append(skill_results[job_offer_skill_result[1]])
-        
-        # Displays my skills that are also job posting skills
-        if job_offer_skill_result[1] in my_skill_set:
-            #print(f'\t\t{skill_results[job_offer_skill_result[1]]}')
-            job_offers[job_offer_skill_result[0]]['my_skills'].append(skill_results[job_offer_skill_result[1]])
+        job_offer_ids = { job_offer_result[0] for job_offer_result in job_offer_results }
+
+        # Use to only show job posting details of job postings in job_offer table.
+        if job_offer_skill_result[0] in job_offer_ids:
+        #    print(f'job posting skills being shown.')
+            job_offers[job_offer_skill_result[0]]['skills'].append(skill_results[job_offer_skill_result[1]])
+            
+            # Displays my skills that are also job posting skills
+            if job_offer_skill_result[1] in my_skill_set:
+                #print(f'\t\t{skill_results[job_offer_skill_result[1]]}')
+        #        print(f'my skills being shown.')
+                job_offers[job_offer_skill_result[0]]['my_skills'].append(skill_results[job_offer_skill_result[1]])
     
     cursor.execute('select id, job_offer_id, benefit from job_benefit')
     job_benefit_results = cursor.fetchall()
@@ -320,7 +333,12 @@ def index(request):
             job_offers[job_benefit_result[1]]['benefits'] = [job_benefit_result[2]]
         else:
         '''
-        job_offers[job_benefit_result[1]]['benefits'].append(job_benefit_result[2])
+        
+        job_offer_ids = { job_offer_result[0] for job_offer_result in job_offer_results }
+
+        # Use to only show job posting details of job postings in job_offer table.
+        if job_benefit_result[1] in job_offer_ids:
+            job_offers[job_benefit_result[1]]['benefits'].append(job_benefit_result[2])
     
     cursor.execute('select id, job_offer_id, description_bullet from job_description_bullet')
     job_description_bullet_results = cursor.fetchall()
@@ -330,7 +348,11 @@ def index(request):
             job_offers[job_description_bullet_result[1]]['description'] = [job_description_bullet_result[2]]
         else:
         '''
-        job_offers[job_description_bullet_result[1]]['description'].append(job_description_bullet_result[2])
+        job_offer_ids = { job_offer_result[0] for job_offer_result in job_offer_results }
+
+        # Use to only show job posting details of job postings in job_offer table.
+        if job_description_bullet_result[1] in job_offer_ids:
+            job_offers[job_description_bullet_result[1]]['description'].append(job_description_bullet_result[2])
     
     cursor.execute('select id, job_offer_id, requirement from job_requirement')
     job_requirement_results = cursor.fetchall()
@@ -343,7 +365,11 @@ def index(request):
         else:
         '''
         #print(f'job offer id: {job_requirement_result[2]}')
-        job_offers[job_requirement_result[1]]['requirements'].append(job_requirement_result[2])
+        job_offer_ids = { job_offer_result[0] for job_offer_result in job_offer_results }
+
+        # Use to only show job posting details of job postings in job_offer table.
+        if job_requirement_result[1] in job_offer_ids:
+            job_offers[job_requirement_result[1]]['requirements'].append(job_requirement_result[2])
     
     cursor.execute('select id, job_offer_id, responsibility from job_responsibility')
     job_responsibility_results = cursor.fetchall()
@@ -353,7 +379,11 @@ def index(request):
             job_offers[job_responsibility_result[1]]['responsibility'] = [job_responsibility_result[2]]
         else:
         '''
-        job_offers[job_responsibility_result[1]]['responsibilities'].append(job_responsibility_result[2])
+        job_offer_ids = { job_offer_result[0] for job_offer_result in job_offer_results }
+
+        # Use to only show job posting details of job postings in job_offer table.
+        if job_responsibility_result[1] in job_offer_ids:
+            job_offers[job_responsibility_result[1]]['responsibilities'].append(job_responsibility_result[2])
     
     job_offers = [job_offer for job_offer in job_offers.values()]
     #print(job_offers)
