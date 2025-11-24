@@ -119,21 +119,66 @@
     <div>
         <h2>My Project(s)</h2>
         <ul>
-            <li>Job Analyzer/Search</li>
-            <li>Movie Filter/Recommendation System</li>
-            <li>Distributed File System</li>
+            <!--<li>Job Analyzer/Search</li>-->
+            <!--<li>Movie Filter/Recommendation System</li>-->
+            <!--<li>Distributed File System</li>-->
+            {% for my_project in my_projects %}
+            <li>{{ my_project.name }}
+                <ul>
+                    <li>SQL ID: {{ my_project.sql_id }}</li>
+                    <li>Description: {{ my_project.description }}</li>
+                    <li>Status: {{ my_project.status }}</li>
+                    <li>Skill(s):
+                        <ul>
+                            {% for skill in my_project.skills %}
+                            <li>
+                                {{ skill }}
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            {% endfor %}
         </ul>
-        <form id="" method="POST">
-            {% csrf_token %}
-            <div>
-                <label for="project_name">Project Name:</label>
-                <input type="text" id="project_name" name="project_name" required>
-                <button type="submit">Add Project</button>
+        <div id="add-project-window" class="pop-up-window">
+            <div class="pop-up-window-content">
+                <label>Project Details:</label>
+                <button name="close_button" type="button" onclick="document.getElementById('add-project-window').style.display='none';" class="pop-up-window-close grey-button-layout" style="right: 10px">X</button>
+                <hr>
+                <form method="POST">
+                    {% csrf_token %}
+                    <table style="padding-left: 10px">
+                        <tr>
+                            <td><label for="project_name">Name:</label></td>
+                            <td><input type="text" id="project_name" name="project_name"></td>
+                        </tr>
+                        <tr>
+                            <td><label for="project_skills">Skills</label></td>
+                            <td><textarea id="project_skills" name="project_skills"></textarea></td>
+                        </tr>
+                        <tr>
+                            <td><label>Description</label></td>
+                            <td><textarea id="project_description" name="project_description"></textarea></td>
+                        </tr>
+                        <tr>
+                            <td><label>Status</label></td>
+                            <td>
+                                <select name="project_status">
+                                    <option value="Planned">Planned</option>
+                                    <option value="In-Progress">In-Progress</option>
+                                    <option value="MVP Finsihed">MVP Finsihed</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+                    <button class="green-button-layout" type="submit" name="action" value="add_project">Submit</button>
+                    <button class="red-button-layout">Cancel</button>
+                </form>
             </div>
-            </br>
-            <button class="green-button-layout">Add Project</button>
-            <button class="grey-button-layout">Update Project</button>
-        </form>
+        </div>
+        <button class="green-button-layout" onclick="document.getElementById('add-project-window').style.display='block'">Add Project</button>
+        <button class="grey-button-layout">Update Project</button>
     </div>
     <h2>New Job Offer</h2>
     <form id="new_job_offer" method="POST">
@@ -403,6 +448,19 @@
                 break;
             case 'remove':
                 document.getElementById("remove_sql_id").value = '';
+                break;
+            }
+        }
+
+        function cancel_project_window(name) {
+            document.getElementById(name+'-project-window').style.display = 'none';
+
+            switch (name) {
+            case 'add':
+                //document.getElementById('add-project-window').value = '';
+                break;
+            case 'update':
+                //document.getElementById('update-product-window').value = '';
                 break;
             }
         }

@@ -258,11 +258,52 @@ def index(request):
             conn.commit()
             cursor.execute(f'delete from job_offer where id = ?',[job_posting_sql_id])
             conn.commit()
-        
+        elif action == 'add_project':
+            project_name = request.POST.get('project_name')
+            #print(f'Project Name: {project_name}')
+            project_skills = request.POST.get('project_skills')
+            #print(f'Project Skills: {project_skills}')
+            project_skills = project_skills.lower()
+            project_description = request.POST.get('project_description')
+            #print(f'Project Description: {project_description}')
+            project_status = request.POST.get('project_status')
+            #print(f'Project Status: {project_status}')
+            
+            conn = sqlite3.connect('/Users/stevencrowther/Documents/Coding/web development/job_search-root/db.sqlite3')
+            cursor = conn.cursor()
+            cursor.execute('select id, lower(name) from skill')
+            skill_results = cursor.fetchall()
+            project_skill_ids = set()
+            for id, name in skill_results:
+                if re.search(rf'(?<!\w){re.escape(name)}(?!\w)', project_skills):
+                    print(f'Skill: {name}')
+                    project_skill_ids.add(id)
+            
+            cursor.execute(f'insert into my_project(name, description, status) values(?,?,?)', [project_name, project_description,  project_status])
+            conn.commit()
+            project_id = cursor.lastrowid
+            '''
+            cursor.execute('select id, name, description, status from my_project where id = ?', [project_id])
+            project_result = cursor.fetchone()
+            print(f'Project id: {project_result[0]}')
+            print(f'Project name: {project_result[1]}')
+            print(f'Project description: {project_result[2]}')
+            print(f'Project status: {project_result[3]}')
+            '''
+            cursor.executemany(f'insert into my_project_skill(my_project_id, skill_id) values(?,?)', list(zip([project_id] * len(project_skill_ids), project_skill_ids)))
+            conn.commit()
+            '''
+            cursor.execute('select my_project_id, skill_id from my_project_skill where my_project_id = ?', [project_id])
+            my_project_skill_results = cursor.fetchall()
+            skills = {skill_result[0] : skill_result[1] for skill_result in skill_results}
+            for my_project_skill_result in my_project_skill_results:
+                print(f'My Project Skill: {skills[my_project_skill_result[1]]}')
+            '''
+            
         #return HttpResponseRedirect('/')
     
     connection = sqlite3.connect('/Users/stevencrowther/Documents/Coding/web development/job_search-root/db.sqlite3')
-    cursor = connection.cursor()
+    cursor = connection.cursor()    
     
     cursor.execute('select id, company, job_id, position, location, salary, date_posted, date_applied, application_status, fit_score from job_offer')
     job_offer_results = cursor.fetchall()
@@ -385,7 +426,27 @@ def index(request):
         if job_responsibility_result[1] in job_offer_ids:
             job_offers[job_responsibility_result[1]]['responsibilities'].append(job_responsibility_result[2])
     
+    cursor.execute('select id, name, description, status from my_project')
+    my_project_results = cursor.fetchall()
+    cursor.execute('select my_project_id, skill_id from my_project_skill order by my_project_id')
+    my_project_skill_results = cursor.fetchall()
+    my_projects = {}
+    for my_project_result in my_project_results:
+        my_projects[my_project_result[0]] = {
+            'sql_id' : my_project_result[0],
+            'name' : my_project_result[1],
+            'description' : my_project_result[2],
+            'status' : my_project_result[3],
+            'skills' : []
+        }
+        
+    for my_project_skill_result in my_project_skill_results:
+        my_projects[my_project_skill_result[0]]['skills'].append(skill_results[my_project_skill_result[1]])
+    
     job_offers = [job_offer for job_offer in job_offers.values()]
     #print(job_offers)
-    context = { "job_postings" : job_offers }
+    context = { 
+        'job_postings' : job_offers,
+        'my_projects' : [my_project for my_project in my_projects.values()]
+    }
     return render(request, 'myapp/index.html', context)
