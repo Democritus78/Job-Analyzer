@@ -220,8 +220,8 @@
         <button class="grey-button-layout" onclick="document.getElementById('update-project-window').style.display='block'">Update Project</button>
         -->
     </div>
-    <h2>New Job Offer</h2>
-    <form id="new_job_offer" method="POST">
+    <h2>New Job Posting</h2>
+    <form id="new_job_posting" method="POST">
         {% csrf_token %}
         <table style="padding-left: 10px">
             <tr>
@@ -276,7 +276,7 @@
             const benefits = document.getElementById('benefits');
     
             
-            function extract_job_offer() {
+            function extract_job_posting() {
                 let name = company_name.value.trim();
                 let id;
                 if (!(job_id.value === "")) {
@@ -312,7 +312,7 @@
             }
             */
     
-            function fix_job_offer_format() {
+            function fix_job_posting_format() {
                 company_name.value = company_name.value.trim();
                 job_id.value = job_id.value.trim();
                 position.value = position.value.trim();
@@ -331,7 +331,7 @@
                 benefits.value = benefits.value.split('\n').map(item => item.trim()).filter(line => line !== "").map(item => item = '- ' + item).join('\n');
             }
     
-            function clear_job_offer() {
+            function clear_job_posting() {
                 company_name.value = '';
                 job_id.value = '';
                 position.value = '';
@@ -355,7 +355,7 @@
             const requirements = document.getElementById('requirements');
             const benefits = document.getElementById('benefits');
 
-            function clear_job_offer() {
+            function clear_job_posting() {
                 company_name.value = '';
                 job_id.value = '';
                 position.value = '';
@@ -368,15 +368,15 @@
             }
         </script>
         -->
-        <!--<button type="submit" onclick="document.getElementById(pop-up-window).style.display = block;">Add Job Offer</button>-->
-        <button type="submit" class="green-button-layout" name="action" value="add_job_offer">Add Job Offer</button>
-        <button type='button' class="grey-button-layout" onclick="fix_job_offer_format()">Fix Text Format</button>
-        <button type="button" class="red-button-layout" onclick="clear_job_offer()">Cancel Job Offer</button>
+        <!--<button type="submit" onclick="document.getElementById(pop-up-window).style.display = block;">Add Job Posting</button>-->
+        <button type="submit" class="green-button-layout" name="action" value="add_job_posting">Add Job Posting</button>
+        <button type='button' class="grey-button-layout" onclick="fix_job_posting_format()">Fix Text Format</button>
+        <button type="button" class="red-button-layout" onclick="clear_job_posting()">Cancel Job Posting</button>
     </form>
 
     <!--
     <div id="pop-up-window" class="pop-up-window">
-        <div>Extracted Job Offer</div>
+        <div>Extracted Job Posting</div>
         <div id="pop-up-window-content"></div>
 
         <p>Are you ready to analyze the offer?</p>
@@ -385,11 +385,11 @@
             // comment out!!! <button id="submit" type="submit" style="background-color: green; color: white; border: 1px solid white;">Yes, Analyze</button>
             <button id="submit" type="submit" class="green-button-layout">Yes, Analyze</button>
             // comment out!!! <button id="cancel" type="button" style="background-color: red; color: white; border: 1px solid white;" onclick="">No, Cancel</button>
-            <button id="cancel" type="button" class="red-button-layout" onclick="clear_job_offer()">No, Cancel</button>
+            <button id="cancel" type="button" class="red-button-layout" onclick="clear_job_posting()">No, Cancel</button>
         </form>
     </div>
     -->
-    <h2>Job Offer(s)</h2>
+    <h2>Job Posting(s)</h2>
     <form id="score_calculation" method="POST">
         {% csrf_token %}
         <button type="submit">Calculate Score</button>
@@ -397,15 +397,15 @@
     </br>
     <form id="offer_update" method="POST">
         {% csrf_token %}
-        <button type="button" onclick="document.getElementById('update-job-offer-window').style.display='block'" class="green-button-layout">Update Job Offer</button>
-        <button type="button" onclick="document.getElementById('hide-job-offer-window').style.display='block'" class="grey-button-layout">Hide Job Offer</button>
-        <!--<button type="button" onclick="document.getElementById('remove-job-offer-window').style.display='block'" class="red-button-layout">Remove Job Offer</button>-->
+        <button type="button" onclick="document.getElementById('update-job-offer-window').style.display='block'" class="green-button-layout">Update Job Posting</button>
+        <button type="button" onclick="document.getElementById('hide-job-offer-window').style.display='block'" class="grey-button-layout">Hide Job Posting</button>
+        <!--<button type="button" onclick="document.getElementById('remove-job-offer-window').style.display='block'" class="red-button-layout">Remove Job Posting</button>-->
     </form>
     </br>
 
     <div id="update-job-offer-window" class="pop-up-window">
         <div class="pop-up-window-content">
-            <label for="close_button">Job Offer</label>
+            <label for="close_button">Job Posting</label>
             <button name="close_button" type="button" onclick="document.getElementById('update-job-offer-window').style.display='none';" class="pop-up-window-close grey-button-layout" style="right: 10px">X</button>
             </br>
             <!--<span class="pop-up-window-close">&times;</span>-->
@@ -424,14 +424,14 @@
                         <td><input type="text" id="application_status" name="job_status"></input></td>
                     </tr>
                 </table>
-                <button type="submit" class="green-button-layout" name="action" value="update_job_offer">Submit</button>
+                <button type="submit" class="green-button-layout" name="action" value="update_job_posting">Submit</button>
                 <button type="button" class="red-button-layout" onclick="cancel_popup_window('update');">Cancel</button>
             </form>
         </div>
     </div>
     <div id="hide-job-offer-window" class="pop-up-window">
         <div class="pop-up-window-content">
-            <label for="close_button">Job Offer</label>
+            <label for="close_button">Job Posting</label>
             <button name="close_button" type="button" onclick="document.getElementById('hide-job-offer-window').style.display='none'" class="pop-up-window-close grey-button-layout">X</button>
             </br>
             <form method="POST">
@@ -442,7 +442,7 @@
                         <td><input type="text" id="hide_sql_id" name="sql_id"></button></td>
                     </tr>
                 </table>
-                <button type="submit" class="green-button-layout" name="action" value="hide_job_offer">Submit</button>
+                <button type="submit" class="green-button-layout" name="action" value="hide_job_posting">Submit</button>
                 <button type="button" class="red-button-layout" onclick="cancel_popup_window('hide');">Cancel</button>
             </form>
         </div>
@@ -450,7 +450,7 @@
     <!--
     <div id="remove-job-offer-window" class="pop-up-window">
         <div class="pop-up-window-content">
-            <label for="close_button">Job Offer</label>
+            <label for="close_button">Job Posting</label>
             <button name="close_button" type="button" onclick="document.getElementById('remove-job-offer-window').style.display='none'" class="pop-up-window-close grey-button-layout">X</button>
             </br>
             <form action="#" method="POST">
@@ -505,7 +505,7 @@
         }
     </script>
     <!--
-    <table id="Job Offer table" style="width:100%">
+    <table id="Job Posting table" style="width:100%">
         <tr id="">
             <th>Company Name</th>
             <th>Job ID</th>
@@ -720,7 +720,7 @@
                     </ul>
                 </div>
                 <div>
-                    Job Offer Skills
+                    Job Posting Skills
                     <ul>
                         {% for skill in job_posting.skills %}
                         <li>{{ skill }}</li>
