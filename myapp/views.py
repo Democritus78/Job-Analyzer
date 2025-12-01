@@ -34,6 +34,29 @@ def fit_score(job_offer_skill_ids: tuple[int]) -> int:
     
     return int((sum / len(job_offer_skill_ids)) * 100)
 
+def update_project_details(request, id):
+    conn = sqlite3.connect('/Users/stevencrowther/Documents/Coding/web development/job_search-root/db.sqlite3')
+    cursor = conn.cursor()
+    cursor.execute(f'select name, description, status from my_project where id = ?', [id])
+    name, description, status = cursor.fetchone()
+    
+    cursor.execute('select id, name from skill')
+    skill_results = cursor.fetchall()
+    skill_results = { skill_result[0] : skill_result[1] for skill_result in skill_results }
+    
+    cursor.execute(f'select my_project_id, skill_id from my_project_skill where my_project_id = ?', [id])
+    my_project_skill_results = cursor.fetchall()
+    
+    context = {
+        'sql_id' : id,
+        'name' : name,
+        'skills' : ', '.join(skill_results[my_project_skill_result[1]] for my_project_skill_result in my_project_skill_results),
+        'description' : description,
+        'status' : status
+    }
+    
+    return render(request, 'myapp/update_project.html', context)
+
 # Create your views here.
 def index(request):
     if request.method == 'POST':
@@ -299,7 +322,61 @@ def index(request):
             for my_project_skill_result in my_project_skill_results:
                 print(f'My Project Skill: {skills[my_project_skill_result[1]]}')
             '''
+        elif action == 'update_project_details':
+            project_sql_id = int(request.POST.get('sql_id'))
+            print(type(project_sql_id))
+            updated_project_skills = request.POST.get('project_skills').lower()
+            project_description = request.POST.get('project_description')
+            project_status = request.POST.get('project_status')
             
+            '''
+            1) delete from my_project_skill where skill_id not in (new ids) (remove those not in inputed)
+            2) find the new differences between the sets
+            3) add differences to stored set.
+            
+            '''
+            
+            conn = sqlite3.connect('/Users/stevencrowther/Documents/Coding/web development/job_search-root/db.sqlite3')
+            cursor = conn.cursor()
+            skill_results = cursor.execute('select id, lower(name) from skill').fetchall()
+            updated_project_skills_ids = set()
+            for id, name in skill_results:
+                if re.search(rf'(?<!\w){re.escape(name)}(?!\w)', updated_project_skills):
+                    print(f'Skill: {name}')
+                    updated_project_skills_ids.add(id)
+            print(type(updated_project_skills_ids))
+            placeholder = ','.join( '?' for _ in updated_project_skills_ids)
+            print(f'updated_project_skills_ids: {updated_project_skills_ids}')
+            cursor.execute(f'''delete from my_project_skill 
+                                where my_project_id = {project_sql_id} 
+                                and skill_id not in ({placeholder})''', list(updated_project_skills_ids))
+            conn.commit()
+            
+            my_project_skill_results = cursor.execute('''select skill_id 
+                                                         from my_project_skill 
+                                                         where my_project_id = ?''', [project_sql_id]).fetchall()
+            my_project_current_skill_id_results = { my_project_skill_result[0] for my_project_skill_result in my_project_skill_results}
+            skill_id_differences = updated_project_skills_ids - my_project_current_skill_id_results
+            print('test')
+            for skill_id in skill_id_differences:
+                print(f'\tskill_id: {skill_id}')
+            cursor.executemany('insert into my_project_skill(my_project_id, skill_id) values(?,?)', list(zip([project_sql_id] * len(skill_id_differences), skill_id_differences)))
+            conn.commit()
+            my_current_project_result = cursor.execute(f'select description, status from my_project where id = {project_sql_id}').fetchone()
+            current_description = my_current_project_result[0][0]
+            current_status = my_current_project_result[0][1]
+            if current_description != project_description:
+                cursor.execute(f'''update my_project 
+                                   set description = ?
+                                   where id = ?''', (project_description, project_sql_id) )
+                conn.commit()
+            
+            if current_status != project_status:
+                cursor.execute(f'''update my_project
+                                   set status = ?
+                                   where id = ?''', (project_status, project_sql_id))
+                conn.commit()
+                
         #return HttpResponseRedirect('/')
     
     connection = sqlite3.connect('/Users/stevencrowther/Documents/Coding/web development/job_search-root/db.sqlite3')

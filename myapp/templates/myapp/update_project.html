@@ -1,0 +1,55 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+</head>
+<body>
+    <div>
+        <h2>Update Project: </h2>
+        <form method="POST" action="{% url 'index' %}">
+            {% csrf_token %}
+            <table>
+                <tr>
+                    <td><h2>{{ name }}</h2></td>
+                </tr>
+                <tr>
+                    <td><label>Skills</label></td>
+                    <td><textarea name="project_skills" cols="80" rows="10" style="resize:none;">{{ skills }}</textarea></td>
+                </tr>
+                <tr>
+                    <td><label>Description</label></td>
+                    <td><textarea name="project_description" cols="80" rows="10" style="resize:none;">{{ description }}</textarea></td>
+                </tr>
+                <tr>
+                    <td><label>Status</label></td>
+                    <td>
+                        <select name="project_status">
+                            {% if status == 'Planned' %}
+                            <option value="Planned" selected>Planned</option>
+                            {% else %}
+                            <option value="Planned">Planned</option>
+                            {% endif %}
+
+                            {% if status == 'In-Progress' %}
+                            <option value="In-Progress" selected>In-Progress</option>
+                            {% else %}
+                            <option value="In-Progress">In-Progress</option>
+                            {% endif %}
+
+                            {% if status == 'MVP Finsihed' %}
+                            <option value="MVP Finsihed" selected>MVP Finsihed</option>
+                            {% else %}
+                            <option value="MVP Finsihed">MVP Finsihed</option>
+                            {% endif %}
+                        </select>
+                    </td>
+                </tr>
+                <input type="hidden" name="sql_id" value="{{ sql_id }}">
+            </table>
+            <br>
+            <button type="submit" name="action" value="update_project_details">Submit Project Details</button>
+        <form/>
+    </div>
+    <!--[<a href="{% url 'index' %}"> Back to Home </a>]-->
+</body>
+</html>

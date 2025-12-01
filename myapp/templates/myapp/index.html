@@ -123,7 +123,7 @@
             <!--<li>Movie Filter/Recommendation System</li>-->
             <!--<li>Distributed File System</li>-->
             {% for my_project in my_projects %}
-            <li>{{ my_project.name }}
+            <li>{{ my_project.name }} [<a href="{% url 'update_project_details' id=my_project.sql_id %}"> Edit </a>]
                 <ul>
                     <li>SQL ID: {{ my_project.sql_id }}</li>
                     <li>Description: {{ my_project.description }}</li>
@@ -143,7 +143,7 @@
         </ul>
         <div id="add-project-window" class="pop-up-window">
             <div class="pop-up-window-content">
-                <label>Project Details:</label>
+                <label>Add Project Details:</label>
                 <button name="close_button" type="button" onclick="document.getElementById('add-project-window').style.display='none';" class="pop-up-window-close grey-button-layout" style="right: 10px">X</button>
                 <hr>
                 <form method="POST">
@@ -178,7 +178,47 @@
             </div>
         </div>
         <button class="green-button-layout" onclick="document.getElementById('add-project-window').style.display='block'">Add Project</button>
-        <button class="grey-button-layout">Update Project</button>
+        <!--
+        <div id="update-project-window" class="pop-up-window">
+            <div class="pop-up-window-content">
+                <label>Update Project Details</label>
+                <button name="close_button" type="button" onclick="document.getElementById('update-project-window').style.display='none';" class="pop-up-window-close grey-button-layout" style="right: 10px">X</button>
+                <hr>
+                <form method="POST">
+                    {% csrf_token %}
+                    <table style="padding-left: 10px">
+                        <tr>
+                            <td><label for="project_name">SQL ID:</label></td>
+                            <td><input type="text" id="project_name" name="project_name"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" value="skill_update"></td>
+                            <td><label for="project_skills">Skills</label></td>
+                            <td><textarea id="project_skills" name="project_skills"></textarea></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" value="description_update"></td>
+                            <td><label>Description</label></td>
+                            <td><textarea id="project_description" name="project_description"></textarea></td>
+                        </tr>
+                        <tr>
+                            <td><label>Status</label></td>
+                            <td>
+                                <select name="project_status">
+                                    <option value="Planned">Planned</option>
+                                    <option value="In-Progress">In-Progress</option>
+                                    <option value="MVP Finsihed">MVP Finsihed</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+                    <button class="green-button-layout" type="submit" name="action" value="update_project">Submit</button>
+                    <button class="red-button-layout">Cancel</button>
+                </form>
+            </div>
+        </div>
+        <button class="grey-button-layout" onclick="document.getElementById('update-project-window').style.display='block'">Update Project</button>
+        -->
     </div>
     <h2>New Job Offer</h2>
     <form id="new_job_offer" method="POST">
@@ -225,7 +265,6 @@
             </tr>
         </table>
         <script>
-        
             const company_name = document.getElementById('company_name');
             const job_id = document.getElementById('job_id');
             const position = document.getElementById('position');
