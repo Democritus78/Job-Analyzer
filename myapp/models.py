@@ -165,7 +165,7 @@ class JobDescriptionBullet(models.Model):
 
 class JobOffer(models.Model):
     company = models.TextField()
-    job_id = models.IntegerField(blank=True, null=True)
+    job_id = models.TextField(blank=True, null=True)
     position = models.TextField()
     location = models.TextField()
     salary = models.TextField(blank=True, null=True)
@@ -191,7 +191,6 @@ class JobOfferSkill(models.Model):
 
 class JobRequirement(models.Model):
     job_offer = models.ForeignKey(JobOffer, models.DO_NOTHING)
-    type_t = models.TextField(blank=True, null=True)
     requirement = models.TextField()
 
     class Meta:
@@ -210,10 +209,8 @@ class JobResponsibility(models.Model):
 
 class MyProject(models.Model):
     name = models.TextField()
-    description = models.TextField()
-    date_created = models.TextField()
-    date_completed = models.TextField(blank=True, null=True)
-    status = models.TextField()
+    description = models.TextField(blank=True, null=True)
+    status = models.TextField(blank=True, null=True)
 
     class Meta:
         managed = False
@@ -248,13 +245,13 @@ class MyappPerson(models.Model):
 
 class OldJobOffer(models.Model):
     company = models.TextField()
-    job_id = models.IntegerField(blank=True, null=True)
+    job_id = models.TextField(blank=True, null=True)
     position = models.TextField()
     location = models.TextField()
     salary = models.TextField(blank=True, null=True)
     date_posted = models.TextField(blank=True, null=True)
-    date_applied = models.TextField()
-    application_status = models.TextField()
+    date_applied = models.TextField(blank=True, null=True)
+    application_status = models.TextField(blank=True, null=True)
     fit_score = models.IntegerField()
 
     class Meta:
